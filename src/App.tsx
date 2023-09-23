@@ -1,7 +1,24 @@
+import { useState } from "react";
 import "./App.css";
 
 function App() {
-  return <div className="App"></div>;
+  const [text, setText] = useState("");
+
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+
+  return (
+    <div className="App">
+      <h1>Todo</h1>
+      <input
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      />
+    </div>
+  );
 }
 
 export default App;
