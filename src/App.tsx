@@ -1,22 +1,36 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 
-function App() {
-  const [text, setText] = useState("");
+import Editor from "./components/Editor";
 
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+interface Todo {
+  id: number;
+  content: string;
+}
+
+function App() {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const idRef = useRef(0);
+
+  const onClickAdd = (text: string) => {
+    setTodos([
+      ...todos,
+      {
+        id: idRef.current++,
+        content: text,
+      },
+    ]);
   };
+
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
   return (
     <div className="App">
       <h1>Todo</h1>
-      <input
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-      />
+      <Editor onClickAdd={onClickAdd} />
     </div>
   );
 }
